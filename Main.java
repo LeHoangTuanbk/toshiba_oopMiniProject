@@ -76,7 +76,7 @@ public class Main {
                 try {
                     int accountFuntion = myScan.nextInt();
                     if(accountFuntion == 1){
-                        System.out.println("Nhap id can tim:");
+                        System.out.println("Nhap id account can tim:");
                         int accountId = myScan.nextInt();
                         for(int i=0;i<Bank.linkListAccounts.size();i++)
                         {
@@ -115,9 +115,57 @@ public class Main {
 
                     }
                     else if(accountFuntion == 4){
+                        System.out.println("Thay doi thong tin account");
+                        System.out.print("Nhap acount id can thay doi thong tin: ");
+                        int accountId = myScan.nextInt();
+
+                        boolean changeFlag = true ;
+                        for(int i=0;i<Bank.linkListAccounts.size();i++)
+                        {
+                            if(Bank.linkListAccounts.get(i).getAccountID() == accountId)
+                            {
+                                System.out.println("Thong tin cua accountId "+accountId+" ban vua nhap "+ Bank.linkListAccounts.get(i));
+                                System.out.print("Nhap customer name moi:");
+                                String acountName = myScan.next();
+                                System.out.print("Nhap customer address moi:");
+                                String accountAdress = myScan.next();
+                                System.out.print("Nhap customer username moi: ");
+                                String accountUsername = myScan.next();
+                                System.out.print("Nhap customer password moi: ");
+                                String accountPassword = myScan.next();
+                                System.out.print("Nhap so du moi: ");
+                                int acountBalance = myScan.nextInt();
+                                Account account = new Account(accountId,acountName,accountAdress,accountUsername,accountPassword,acountBalance);
+                                Bank.linkListAccounts.set(i,account);
+                                System.out.println("Thay doi thanh cong");
+                                System.out.println(account.toString());
+                                changeFlag = false;
+                            }
+
+                        }
+                        if(changeFlag){
+                            System.out.println("Id da nhap khong co");
+                        }
 
                     }
                     else if(accountFuntion == 5){
+                        System.out.println("Nhap id account can xoa:");
+                        int accountId = myScan.nextInt();
+                        boolean deleteFlag = true;
+                        for(int i=0;i<Bank.linkListAccounts.size();i++)
+                        {
+                            if(Bank.linkListAccounts.get(i).getAccountID() == accountId)
+                            {
+                                System.out.println("Da xoa phan tu "+ Bank.linkListAccounts.get(i) );
+                                deleteFlag = false;
+                                Bank.linkListAccounts.remove(i);
+                            }
+
+                        }
+                        if(deleteFlag){
+                            System.out.println("Id da nhap khong co");
+                        }
+
 
                     }
                     else if(accountFuntion == 6){
