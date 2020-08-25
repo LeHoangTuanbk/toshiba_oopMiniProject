@@ -76,7 +76,7 @@ public class Main {
                 try {
                     int accountFuntion = myScan.nextInt();
                     if(accountFuntion == 1){
-                        System.out.println("Nhap id account can tim:");
+                        System.out.print("Nhap id account can tim:");
                         int accountId = myScan.nextInt();
                         boolean flagAccountId = true;
                         for(int i=0;i<Bank.linkListAccounts.size();i++)
@@ -284,7 +284,7 @@ public class Main {
                         System.out.println(bank.getBankInformation());
                     }
                     else if (mainFuntion == 1) {
-                        System.out.println("Chuc nang dang hoan thien");
+                        System.out.println("Chuc nang dang hoan thien, quay lai sau");
                         //bankAdminOfficer();
 
                     } else if (mainFuntion == 2) {
