@@ -34,6 +34,4 @@ public class BankOfficer {
     public boolean deleteAccount(){
         return true;
     }
-
-
 }

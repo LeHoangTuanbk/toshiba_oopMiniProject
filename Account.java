@@ -19,10 +19,13 @@ public class Account {
     public int getAccountID(){
         return this.accountID;
     }
+    public boolean checkAccount(String cutomerUserName, String cutomerPassword){
+        return (this.cutomerUserName.equals(cutomerUserName) && this.cutomerPassword.equals(cutomerPassword));
+    }
     public String toString(){
-        return "ID: "+accountID+" Name: "+customerName+" Address:"+customerAddress
-                +" Customer Name: "+cutomerUserName+" Customer Password: "+cutomerPassword
-                +" Balance: " + Balance;
+        return "ID: "+accountID+", Name: "+customerName+", Address:"+customerAddress
+                +", Customer UserName: "+cutomerUserName+", Customer Password: "+cutomerPassword
+                +", Balance: " + Balance;
     }
     public String getAccount(){
         return "true";
@@ -30,10 +33,12 @@ public class Account {
     public int getBalance(){
         return Balance;
     }
-    public int depositMoney(){
+    public int depositMoney(int depositMoney){
+        this.Balance = this.Balance+depositMoney;
         return Balance;
     }
-    public int widthDrawMoney(){
-        return Balance;
+    public int widthDrawMoney(int widthDrawMoney){
+        this.Balance = this.Balance-widthDrawMoney;
+        return this.Balance;
     }
 }

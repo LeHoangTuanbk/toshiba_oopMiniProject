@@ -56,7 +56,7 @@ public class Main {
 //        };
 //
 //    }
-    public static void bankOfficers(){
+    public static void bankOfficers() throws Exception {
         Scanner myScan = new Scanner(System.in);
         System.out.println("Hay nhap thong tin dang nhap:");
         System.out.print("Username: ");
@@ -65,7 +65,7 @@ public class Main {
         String bankPassword = myScan.next();
         if (checkBankOfficer(bankUsername,bankPassword)){
             while(true){
-                System.out.println("Xin chao "+bankUsername);
+                System.out.println("Xin chao tai khoan: "+bankUsername);
                 System.out.println("Chon chuc nang cua bank offficer");
                 System.out.println("1.Tim tai khoan");
                 System.out.println("2.Hien thi toan bo tai khoan");
@@ -78,17 +78,26 @@ public class Main {
                     if(accountFuntion == 1){
                         System.out.println("Nhap id account can tim:");
                         int accountId = myScan.nextInt();
+                        boolean flagAccountId = true;
                         for(int i=0;i<Bank.linkListAccounts.size();i++)
                         {
                             if(Bank.linkListAccounts.get(i).getAccountID() == accountId)
                             {
                                 System.out.println(Bank.linkListAccounts.get(i));
+                                flagAccountId = false;
                             }
+                        }
+                        if(flagAccountId){
+                            System.out.println("account Id vua nhap khong ton tai");
                         }
 
                     }
                     else if(accountFuntion == 2){
                         System.out.println("Thong tin toan bo account:");
+                        if(Bank.linkListAccounts.size() == 0){
+                            System.out.println("Chua co tai khoan nao duoc tao");
+                            continue;
+                        }
                         for(int i=0;i<Bank.linkListAccounts.size();i++)
                         {
                             System.out.println(Bank.linkListAccounts.get(i));
@@ -169,6 +178,7 @@ public class Main {
 
                     }
                     else if(accountFuntion == 6){
+                        System.out.println("Ban da dang xuat");
                         break;
                     }
                     else {
@@ -188,6 +198,79 @@ public class Main {
 
 
     }
+    public static void customer() throws Exception {
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("Chuc nang danh cho nguoi dung");
+        System.out.print("Nhap customer username: ");
+        String accountUsername = myScan.next();
+        System.out.print("Nhap customer password: ");
+        String accountPassword = myScan.next();
+        int customerID = -1;
+        boolean flagCustomer = true;
+        for(int i=0;i<Bank.linkListAccounts.size();i++)
+        {
+            if(Bank.linkListAccounts.get(i).checkAccount(accountUsername, accountPassword))
+            {
+                customerID = i;
+                flagCustomer = false;
+            }
+        }
+        if(flagCustomer){
+            System.out.println("Tai khoan hoac mat khau khong dung");
+        }
+        else {
+            while (true) {
+                try {
+                    System.out.println("Xin chao khach hang: "+ accountUsername);
+                    System.out.println("Moi ban chon chuc nang");
+                    System.out.println("1:Truy van tai khoan");
+                    System.out.println("2:Rut tien");
+                    System.out.println("3:Gui tien");
+                    System.out.println("4:Dang xuat");
+                    int customerNumberFuntion = myScan.nextInt();
+                    if(customerNumberFuntion == 1){
+                        System.out.println("Thong tin tai khoan:");
+                        System.out.println(Bank.linkListAccounts.get(customerID));
+                    }
+                    else if(customerNumberFuntion == 2){
+                        System.out.print("So tien hien tai dang co: ");
+                        int customerBalance = Bank.linkListAccounts.get(customerID).getBalance();
+                        System.out.println(customerBalance);
+                        System.out.print("Moi ban nhap so tien can rut: ");
+                        int widthDrawMoney = myScan.nextInt();
+                        if(customerBalance >= widthDrawMoney){
+                            Bank.linkListAccounts.get(customerID).widthDrawMoney(widthDrawMoney);
+                            System.out.println("Rut tien thanh cong\n" +
+                                    "So tien hien tai: "+Bank.linkListAccounts.get(customerID).getBalance());
+                            System.out.println("Moi ban thuc hien cac chuc nang khac");
+                        }
+                        else {
+                            System.out.println("So tien khong du de rut");
+                        }
+                    }
+                    else if(customerNumberFuntion ==3){
+                        System.out.print("So tien hien tai dang co: ");
+                        int customerBalance = Bank.linkListAccounts.get(customerID).getBalance();
+                        System.out.println(customerBalance);
+                        System.out.print("Moi ban nhap so tien can gui vao: ");
+                        int depositMoney = myScan.nextInt();
+                        Bank.linkListAccounts.get(customerID).depositMoney(depositMoney);
+                        System.out.println("So tien sau khi gui them la: "+Bank.linkListAccounts.get(customerID).getBalance());
+                        System.out.println("Moi ban thuc hien cac chuc nang khac");
+                    }
+                    else if(customerNumberFuntion == 4){
+                        System.out.println("Quy khach vua dang xuat");
+                        break;
+                    }
+                    else {
+                        throw new Exception();
+                    }
+                } catch (Exception e) {
+                    System.out.println("Hay nhap so tu 1 den 4");
+                }
+            }
+        }
+    }
     public static void main(String[] args) throws Exception{
         // write your code here
             while (true){
@@ -201,15 +284,13 @@ public class Main {
                         System.out.println(bank.getBankInformation());
                     }
                     else if (mainFuntion == 1) {
-                        System.out.println("Chuc nang dang hoan thien\n");
+                        System.out.println("Chuc nang dang hoan thien");
                         //bankAdminOfficer();
-
 
                     } else if (mainFuntion == 2) {
                         bankOfficers();
-
                     } else if (mainFuntion == 3) {
-                        System.out.println(mainFuntion);
+                        customer();
                     } else if (mainFuntion == 4)
                     {
                         System.out.println("Chuong trinh ket thuc");
